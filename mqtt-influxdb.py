@@ -50,7 +50,7 @@ DB_NAME = 'mqtt'  # database name
 ######################################################
 
 MYNAME = 'mqtt-influxdb'
-DEBUG = 1
+DEBUG = 0
 TESTRUN = 0
 PROFILE = 0
 
@@ -181,7 +181,7 @@ def on_message(client, userdata, msg):
 
     ## construct container
     db_data = [{
-        "measurement": "messages",
+        "measurement": "message",
         "tags": {
             "topic": msg.topic
         },
