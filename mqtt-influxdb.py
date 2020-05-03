@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 # pylint: disable=line-too-long,invalid-name
 """mqtt-influxdb - Store MQTT messages to InfluxDB.
@@ -27,11 +27,12 @@ import os
 import signal
 import sys
 from json import loads, dumps
-from time import ctime, time
+from time import ctime
+from ast import literal_eval
 
-import paho.mqtt.client as mqtt   # https://pypi.org/project/paho-mqtt/
 from docopt import docopt
-from influxdb import InfluxDBClient
+import paho.mqtt.client as mqtt         ## https://pypi.org/project/paho-mqtt/
+from influxdb import InfluxDBClient     ## https://pypi.org/project/influxdb/
 
 __author__ = "Alexander Streicher"
 __email__ = "ixtalo@gmail.com"
@@ -62,7 +63,7 @@ EXITCODE_MQTT_DISCONNECT = 3
 ## global fields/variables
 logger = logging.getLogger(MYNAME)
 mqtt_client = mqtt.Client()
-db_client = None
+db_client = InfluxDBClient()
 
 
 def signal_handler_sigint(sig, frame):
@@ -129,13 +130,13 @@ def on_disconnect(client, userdata, rc):
 
 
 ### https://stackoverflow.com/questions/22199741/identifying-the-data-type-of-an-input
-from ast import literal_eval
 def get_type(input_data):
     try:
         return type(literal_eval(input_data))
     except (ValueError, SyntaxError):
         # A string, so return str
         return str
+
 
 # noinspection PyUnusedLocal
 def on_message(client, userdata, msg):
