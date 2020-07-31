@@ -1,0 +1,11 @@
+[Unit]
+Description=mqtt-influxdb
+After=infuxdb.service mosquitto.service
+
+[Service]
+Type=simple
+PIDFile=/run/mqtt-influxdb.pid
+ExecStart=/mnt/data/mydata/mqtt-influxdb/venv/bin/python3 /mnt/data/mydata/mqtt-influxdb/mqtt-influxdb.py
+
+[Install]
+WantedBy=multi-user.target

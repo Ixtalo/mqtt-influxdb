@@ -1,0 +1,7 @@
+docopt
+pylint
+
+requests~=2.18
+
+paho-mqtt==1.5
+influxdb
